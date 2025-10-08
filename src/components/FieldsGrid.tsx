@@ -48,15 +48,15 @@ const FieldsGrid: React.FC = () => {
   return (
     <>
       <div className="space-y-6">
-        <div className="bg-gradient-to-r from-green-600 to-emerald-600 rounded-2xl p-8 text-white flex justify-between items-center">
+        <div className="glass-card rounded-2xl p-8 text-glass-primary flex justify-between items-center">
           <div>
-            <h1 className="text-4xl font-bold mb-2">SyferField Management</h1>
-            <p className="text-green-100">Driving Technology • {fields.length} active jobs</p>
+            <h1 className="text-4xl font-bold mb-2">DriveOps-IQ</h1>
+            <p className="text-primary">Intelligent Operations for the Modern Field. • {fields.length} active jobs</p>
           </div>
           {canCreateField() && (
             <Button 
               onClick={() => setIsCreating(true)}
-              className="bg-white text-green-600 hover:bg-green-50"
+              className="cherry-red-btn"
             >
               <Plus className="w-5 h-5 mr-2" />
               Add Job
@@ -65,7 +65,7 @@ const FieldsGrid: React.FC = () => {
         </div>
 
 
-        <div className="bg-white rounded-xl shadow-sm p-4">
+        <div className="glass-card rounded-xl p-4">
           <div className="flex flex-col lg:flex-row gap-4">
             <div className="flex-1 relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />

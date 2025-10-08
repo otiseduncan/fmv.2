@@ -104,12 +104,12 @@ const Analytics: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl p-8 text-white">
+      <div className="glass-card rounded-2xl p-8 text-glass-primary">
         <h1 className="text-4xl font-bold mb-2">Analytics & Reports</h1>
-        <p className="text-indigo-100">Interactive performance metrics and insights</p>
+        <p className="text-primary">Interactive performance metrics and insights</p>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm p-4 flex justify-between items-center">
+      <div className="glass-card rounded-xl p-4 flex justify-between items-center">
         <DateRangePicker
           startDate={startDate}
           endDate={endDate}

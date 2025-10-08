@@ -33,47 +33,49 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onToggleForm, onForgotPass
   };
 
   return (
-    <Card className="w-full max-w-md">
-      <CardHeader>
-        <CardTitle>Welcome Back</CardTitle>
-        <CardDescription>Sign in to your account</CardDescription>
-      </CardHeader>
-      <CardContent>
+    <div className="glass-card rounded-xl p-6 w-full max-w-md">
+      <div className="mb-6">
+        <h2 className="text-2xl font-bold text-glass-primary mb-2">Welcome Back</h2>
+        <p className="text-glass-secondary">Sign in to your account</p>
+      </div>
+      <div>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email" className="text-glass-primary">Email</Label>
             <Input
               id="email"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              className="bg-white/10 border-white/20 text-glass-primary placeholder:text-glass-secondary/60"
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password" className="text-glass-primary">Password</Label>
             <Input
               id="password"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              className="bg-white/10 border-white/20 text-glass-primary placeholder:text-glass-secondary/60"
             />
           </div>
-          <Button type="submit" className="w-full" disabled={loading}>
+          <Button type="submit" className="w-full cherry-red-btn" disabled={loading}>
             {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             Sign In
           </Button>
           <div className="flex justify-between text-sm">
-            <button type="button" onClick={onForgotPassword} className="text-blue-600 hover:underline">
+            <button type="button" onClick={onForgotPassword} className="text-primary hover:text-primary/80 transition-colors">
               Forgot password?
             </button>
-            <button type="button" onClick={onToggleForm} className="text-blue-600 hover:underline">
+            <button type="button" onClick={onToggleForm} className="text-primary hover:text-primary/80 transition-colors">
               Create account
             </button>
           </div>
         </form>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };

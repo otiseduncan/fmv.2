@@ -20,26 +20,37 @@ export default function Login() {
   // Show loading while checking auth state
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-blue-50">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600"></div>
+      <div className="min-h-screen flex flex-col items-center justify-center">
+        <h1 className="text-4xl font-bold text-glass-primary mb-8">DriveOps-IQ</h1>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-blue-50 p-4">
-      {view === 'login' && (
-        <LoginForm
-          onToggleForm={() => setView('register')}
-          onForgotPassword={() => setView('forgot')}
-        />
-      )}
-      {view === 'register' && (
-        <RegisterForm onToggleForm={() => setView('login')} />
-      )}
-      {view === 'forgot' && (
-        <ForgotPasswordForm onBack={() => setView('login')} />
-      )}
+    <div className="min-h-screen flex flex-col items-center justify-center p-4 relative">
+      {/* Hero Section with Branding */}
+      <div className="text-center mb-8 z-10">
+        <h1 className="text-5xl font-bold text-glass-primary mb-4">DriveOps-IQ</h1>
+        <p className="text-xl text-glass-secondary mb-2">Intelligent Operations for the Modern Field</p>
+        <p className="text-glass-secondary">Streamline your automotive calibration workflow</p>
+      </div>
+
+      {/* Auth Forms */}
+      <div className="w-full max-w-md z-10">
+        {view === 'login' && (
+          <LoginForm
+            onToggleForm={() => setView('register')}
+            onForgotPassword={() => setView('forgot')}
+          />
+        )}
+        {view === 'register' && (
+          <RegisterForm onToggleForm={() => setView('login')} />
+        )}
+        {view === 'forgot' && (
+          <ForgotPasswordForm onBack={() => setView('login')} />
+        )}
+      </div>
     </div>
   );
 }

@@ -50,7 +50,7 @@ export default function AuditLogViewer() {
   };
 
   const getActionColor = (action: string) => {
-    const colors: any = { CREATE: 'text-green-600', UPDATE: 'text-blue-600', DELETE: 'text-red-600', 
+    const colors: any = { CREATE: 'text-green-600', UPDATE: 'text-gray-600', DELETE: 'text-red-600', 
       STATUS_CHANGE: 'text-yellow-600', ASSIGN: 'text-purple-600' };
     return colors[action] || 'text-gray-600';
   };

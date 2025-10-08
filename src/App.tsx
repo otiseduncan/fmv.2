@@ -19,8 +19,9 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600"></div>
+      <div className="min-h-screen flex flex-col items-center justify-center">
+        <h1 className="text-4xl font-bold text-glass-primary mb-8">DriveOps-IQ</h1>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
       </div>
     );
   }
@@ -39,7 +40,7 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 
 
 const App = () => (
-  <ThemeProvider defaultTheme="light">
+  <ThemeProvider defaultTheme="dark">
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <AuthProvider>

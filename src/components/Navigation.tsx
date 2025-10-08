@@ -39,7 +39,7 @@ const Navigation: React.FC<NavigationProps> = ({ activeView, setActiveView, side
   const getRoleBadgeColor = (role: string) => {
     switch (role) {
       case 'admin': return 'bg-red-100 text-red-700';
-      case 'manager': return 'bg-blue-100 text-blue-700';
+      case 'manager': return 'bg-red-100 text-red-700';
       default: return 'bg-gray-100 text-gray-700';
     }
   };
@@ -47,25 +47,25 @@ const Navigation: React.FC<NavigationProps> = ({ activeView, setActiveView, side
   return (
     <>
       {/* Mobile Header */}
-      <div className="lg:hidden fixed top-0 left-0 right-0 bg-white border-b border-gray-200 z-40">
+      <div className="lg:hidden fixed top-0 left-0 right-0 glass-nav z-40">
         <div className="flex items-center justify-between p-4">
-          <button onClick={toggleSidebar} className="p-2 hover:bg-gray-100 rounded-lg">
+          <button onClick={toggleSidebar} className="p-2 hover:bg-white/10 rounded-lg text-glass-primary">
             {sidebarOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
-          <h1 className="text-xl font-bold text-gray-900">SyferField Management</h1>
-          <button className="relative p-2 hover:bg-gray-100 rounded-lg">
+          <h1 className="text-xl font-bold text-glass-primary">DriveOps-IQ</h1>
+          <button className="relative p-2 hover:bg-white/10 rounded-lg text-glass-primary">
             <Bell className="w-6 h-6" />
           </button>
         </div>
       </div>
 
       {/* Sidebar */}
-      <div className={`fixed left-0 top-0 h-full bg-white border-r border-gray-200 z-30 transition-transform lg:translate-x-0 ${
+      <div className={`fixed left-0 top-0 h-full glass-nav z-30 transition-transform lg:translate-x-0 ${
         sidebarOpen ? 'translate-x-0' : '-translate-x-full'
       } w-64`}>
-        <div className="p-6 border-b border-gray-200">
-          <h1 className="text-2xl font-bold text-gray-900">SyferField Management</h1>
-          <p className="text-sm text-gray-600 mt-1">Driving Technology</p>
+        <div className="p-6 border-b border-white/10">
+          <h1 className="text-2xl font-bold text-glass-primary">DriveOps-IQ</h1>
+          <p className="text-sm text-glass-secondary mt-1">Intelligent Operations for the Modern Field.</p>
         </div>
 
         <nav className="p-4">
@@ -81,8 +81,8 @@ const Navigation: React.FC<NavigationProps> = ({ activeView, setActiveView, side
                     }}
                     className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${
                       activeView === item.id
-                        ? 'bg-green-50 text-green-700 font-medium'
-                        : 'text-gray-700 hover:bg-gray-50'
+                        ? 'cherry-red-btn font-medium'
+                        : 'text-glass-secondary hover:bg-white/10'
                     }`}
                   >
                     <Icon className="w-5 h-5" />
@@ -94,23 +94,23 @@ const Navigation: React.FC<NavigationProps> = ({ activeView, setActiveView, side
           </ul>
         </nav>
 
-        <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200">
+        <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-white/10">
           <div className="flex items-center space-x-3 mb-4">
-            <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
-              <User className="w-6 h-6 text-green-700" />
+            <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center border border-primary/30">
+              <User className="w-6 h-6 text-primary" />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-gray-900 truncate">
+              <p className="text-sm font-medium text-glass-primary truncate">
                 {profile?.full_name || user?.email}
               </p>
-              <Badge className={`text-xs ${getRoleBadgeColor(profile?.role || 'worker')}`}>
+              <Badge className="text-xs bg-primary/20 text-primary border-primary/30">
                 {profile?.role || 'worker'}
               </Badge>
             </div>
           </div>
           <button 
             onClick={handleLogout}
-            className="w-full flex items-center justify-center space-x-2 px-4 py-2 text-gray-700 hover:bg-gray-50 rounded-lg"
+            className="w-full flex items-center justify-center space-x-2 px-4 py-2 text-glass-secondary hover:bg-white/10 rounded-lg transition-colors"
           >
             <LogOut className="w-5 h-5" />
             <span>Logout</span>

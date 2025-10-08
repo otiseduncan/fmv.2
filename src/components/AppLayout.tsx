@@ -4,12 +4,12 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { useNotifications } from '@/hooks/useNotifications';
 import Navigation from './Navigation';
 import Dashboard from './Dashboard';
-import FieldsGrid from './FieldsGrid';
+import JobPool from './jobs/JobPool';
 import TaskManager from './TaskManager';
 import TeamSection from './TeamSection';
 import Analytics from './Analytics';
 import Settings from './Settings';
-import WeatherWidget from './WeatherWidget';
+import LiveMap from './LiveMap';
 import { SyncIndicator } from './SyncIndicator';
 
 const AppLayout: React.FC = () => {
@@ -27,11 +27,11 @@ const AppLayout: React.FC = () => {
         return (
           <div className="space-y-6">
             <Dashboard />
-            <WeatherWidget />
+            <LiveMap />
           </div>
         );
       case 'fields':
-        return <FieldsGrid />;
+        return <JobPool />;
       case 'tasks':
         return <TaskManager />;
       case 'team':
@@ -46,7 +46,7 @@ const AppLayout: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen text-glass-primary">
       <SyncIndicator />
       
       <Navigation 

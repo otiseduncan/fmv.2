@@ -13,7 +13,7 @@ const FieldCard: React.FC<FieldCardProps> = ({ field, onClick }) => {
       case 'healthy': return <CheckCircle className="w-5 h-5 text-green-600" />;
       case 'critical': return <AlertCircle className="w-5 h-5 text-red-600" />;
       case 'needs_attention': return <Clock className="w-5 h-5 text-yellow-600" />;
-      case 'harvesting': return <TrendingUp className="w-5 h-5 text-blue-600" />;
+      case 'harvesting': return <TrendingUp className="w-5 h-5 text-red-600" />;
       default: return <CheckCircle className="w-5 h-5 text-gray-600" />;
     }
   };
@@ -23,7 +23,7 @@ const FieldCard: React.FC<FieldCardProps> = ({ field, onClick }) => {
       case 'healthy': return 'border-green-200 bg-green-50';
       case 'critical': return 'border-red-200 bg-red-50';
       case 'needs_attention': return 'border-yellow-200 bg-yellow-50';
-      case 'harvesting': return 'border-blue-200 bg-blue-50';
+      case 'harvesting': return 'border-red-200 bg-red-50';
       default: return 'border-gray-200 bg-gray-50';
     }
   };
@@ -54,7 +54,7 @@ const FieldCard: React.FC<FieldCardProps> = ({ field, onClick }) => {
               {field.location}
             </p>
           </div>
-          <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs font-medium">
+          <span className="bg-red-100 text-red-700 px-2 py-1 rounded-full text-xs font-medium">
             {field.size} hrs
           </span>
         </div>

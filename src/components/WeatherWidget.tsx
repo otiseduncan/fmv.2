@@ -39,7 +39,7 @@ const WeatherWidget: React.FC = () => {
   const getWeatherIcon = (condition: string) => {
     switch (condition.toLowerCase()) {
       case 'sunny': return <Sun className="w-8 h-8 text-yellow-500" />;
-      case 'rainy': return <CloudRain className="w-8 h-8 text-blue-500" />;
+      case 'rainy': return <CloudRain className="w-8 h-8 text-gray-400" />;
       case 'cloudy': return <Cloud className="w-8 h-8 text-gray-500" />;
       default: return <Cloud className="w-8 h-8 text-gray-400" />;
     }
@@ -47,7 +47,7 @@ const WeatherWidget: React.FC = () => {
 
   const getIrrigationRecommendation = () => {
     if (weather.forecast[0].rainChance > 60) {
-      return { text: 'Heavy rain expected — consider delaying mobile service', color: 'text-blue-600', bg: 'bg-blue-50' };
+      return { text: 'Heavy rain expected — consider delaying mobile service', color: 'text-gray-600', bg: 'bg-gray-50' };
     } else if (weather.humidity < 40) {
       return { text: 'Low humidity — good conditions for calibration', color: 'text-orange-600', bg: 'bg-orange-50' };
     } else {
@@ -67,37 +67,37 @@ const WeatherWidget: React.FC = () => {
             <div className="flex justify-between items-start mb-4">
               <div>
                 <p className="text-5xl font-bold">{weather.temp}°F</p>
-                <p className="text-blue-100 mt-2">{weather.condition}</p>
+                <p className="text-gray-200 mt-2">{weather.condition}</p>
               </div>
               {getWeatherIcon(weather.condition)}
             </div>
             
             <div className="grid grid-cols-2 gap-4 mt-6">
               <div className="flex items-center">
-                <Droplets className="w-5 h-5 mr-2 text-blue-200" />
+                <Droplets className="w-5 h-5 mr-2 text-gray-200" />
                 <div>
-                  <p className="text-xs text-blue-200">Humidity</p>
+                  <p className="text-xs text-gray-200">Humidity</p>
                   <p className="font-semibold">{weather.humidity}%</p>
                 </div>
               </div>
               <div className="flex items-center">
-                <Wind className="w-5 h-5 mr-2 text-blue-200" />
+                <Wind className="w-5 h-5 mr-2 text-gray-200" />
                 <div>
-                  <p className="text-xs text-blue-200">Wind</p>
+                  <p className="text-xs text-gray-200">Wind</p>
                   <p className="font-semibold">{weather.windSpeed} mph</p>
                 </div>
               </div>
               <div className="flex items-center">
-                <Gauge className="w-5 h-5 mr-2 text-blue-200" />
+                <Gauge className="w-5 h-5 mr-2 text-gray-200" />
                 <div>
-                  <p className="text-xs text-blue-200">Pressure</p>
+                  <p className="text-xs text-gray-200">Pressure</p>
                   <p className="font-semibold">{weather.pressure} in</p>
                 </div>
               </div>
               <div className="flex items-center">
-                <Eye className="w-5 h-5 mr-2 text-blue-200" />
+                <Eye className="w-5 h-5 mr-2 text-gray-200" />
                 <div>
-                  <p className="text-xs text-blue-200">Visibility</p>
+                  <p className="text-xs text-gray-200">Visibility</p>
                   <p className="font-semibold">{weather.visibility} mi</p>
                 </div>
               </div>
@@ -122,7 +122,7 @@ const WeatherWidget: React.FC = () => {
                 </div>
                 <div className="flex items-center space-x-4">
                   <div className="flex items-center text-sm">
-                    <Droplets className="w-4 h-4 mr-1 text-blue-500" />
+                    <Droplets className="w-4 h-4 mr-1 text-gray-400" />
                     <span className="text-gray-600">{day.rainChance}%</span>
                   </div>
                   <div className="text-right">

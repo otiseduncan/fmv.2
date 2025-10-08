@@ -38,13 +38,13 @@ const Settings: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <div className="bg-gradient-to-r from-gray-700 to-gray-900 rounded-2xl p-8 text-white">
+      <div className="glass-card rounded-2xl p-8 text-glass-primary">
         <h1 className="text-4xl font-bold mb-2">Settings</h1>
-        <p className="text-gray-300">Manage your account and preferences</p>
+        <p className="text-glass-secondary">Manage your account and preferences</p>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm">
-        <div className="border-b border-gray-200">
+      <div className="glass-card rounded-xl">
+        <div className="border-b border-white/20">
           <div className="flex space-x-8 px-6">
             {tabs.map(tab => {
               const Icon = tab.icon;
@@ -54,8 +54,8 @@ const Settings: React.FC = () => {
                   onClick={() => setActiveTab(tab.id)}
                   className={`py-4 px-2 border-b-2 transition-colors flex items-center space-x-2 ${
                     activeTab === tab.id
-                      ? 'border-indigo-600 text-indigo-600'
-                      : 'border-transparent text-gray-600 hover:text-gray-900'
+                      ? 'border-primary text-primary'
+                      : 'border-transparent text-glass-secondary hover:text-glass-primary'
                   }`}
                 >
                   <Icon className="w-5 h-5" />
@@ -74,20 +74,20 @@ const Settings: React.FC = () => {
 
           {activeTab === 'notifications' && (
             <div className="space-y-6 max-w-2xl">
-              <h3 className="text-lg font-semibold mb-4">Notification Preferences</h3>
+              <h3 className="text-lg font-semibold mb-4 text-glass-primary">Notification Preferences</h3>
               
               <div className="space-y-4">
                 {[
                   { key: 'email', label: 'Email Notifications', desc: 'Receive updates via email' },
                   { key: 'sms', label: 'SMS Notifications', desc: 'Get text messages for urgent updates' },
-                  { key: 'critical', label: 'Critical Alerts', desc: 'Immediate notifications for critical field issues' },
+                  { key: 'critical', label: 'Critical Alerts', desc: 'Immediate notifications for critical job issues' },
                   { key: 'tasks', label: 'Task Reminders', desc: 'Reminders for upcoming and overdue tasks' },
                   { key: 'weather', label: 'Weather Alerts', desc: 'Daily weather updates and severe weather warnings' }
                 ].map(item => (
-                  <div key={item.key} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                  <div key={item.key} className="flex items-center justify-between p-4 bg-white/5 border border-white/10 rounded-lg">
                     <div>
-                      <p className="font-medium text-gray-900">{item.label}</p>
-                      <p className="text-sm text-gray-600">{item.desc}</p>
+                      <p className="font-medium text-glass-primary">{item.label}</p>
+                      <p className="text-sm text-glass-secondary">{item.desc}</p>
                     </div>
                     <button
                       onClick={() => setSettings({
@@ -99,8 +99,8 @@ const Settings: React.FC = () => {
                       })}
                       className={`relative w-12 h-6 rounded-full transition-colors ${
                         settings.notifications[item.key as keyof typeof settings.notifications]
-                          ? 'bg-indigo-600'
-                          : 'bg-gray-300'
+                          ? 'bg-primary'
+                          : 'bg-white/20'
                       }`}
                     >
                       <span className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform ${
@@ -117,34 +117,34 @@ const Settings: React.FC = () => {
 
           {activeTab === 'security' && (
             <div className="space-y-6 max-w-2xl">
-              <h3 className="text-lg font-semibold mb-4">Security Settings</h3>
+              <h3 className="text-lg font-semibold mb-4 text-glass-primary">Security Settings</h3>
               
               <div className="space-y-4">
-                <div className="p-4 bg-gray-50 rounded-lg">
-                  <p className="font-medium text-gray-900 mb-3">Change Password</p>
+                <div className="p-4 bg-white/5 border border-white/10 rounded-lg">
+                  <p className="font-medium text-glass-primary mb-3">Change Password</p>
                   <div className="space-y-3">
                     <input
                       type="password"
                       placeholder="Current Password"
-                      className="w-full px-4 py-2 border border-gray-200 rounded-lg"
+                      className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-glass-primary placeholder:text-glass-secondary/60"
                     />
                     <input
                       type="password"
                       placeholder="New Password"
-                      className="w-full px-4 py-2 border border-gray-200 rounded-lg"
+                      className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-glass-primary placeholder:text-glass-secondary/60"
                     />
                     <input
                       type="password"
                       placeholder="Confirm New Password"
-                      className="w-full px-4 py-2 border border-gray-200 rounded-lg"
+                      className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-glass-primary placeholder:text-glass-secondary/60"
                     />
                   </div>
                 </div>
                 
-                <div className="p-4 bg-gray-50 rounded-lg">
-                  <p className="font-medium text-gray-900 mb-2">Two-Factor Authentication</p>
-                  <p className="text-sm text-gray-600 mb-3">Add an extra layer of security to your account</p>
-                  <button className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">
+                <div className="p-4 bg-white/5 border border-white/10 rounded-lg">
+                  <p className="font-medium text-glass-primary mb-2">Two-Factor Authentication</p>
+                  <p className="text-sm text-glass-secondary mb-3">Add an extra layer of security to your account</p>
+                  <button className="cherry-red-btn px-4 py-2 rounded-lg">
                     Enable 2FA
                   </button>
                 </div>
@@ -154,26 +154,26 @@ const Settings: React.FC = () => {
 
           {activeTab === 'data' && (
             <div className="space-y-6 max-w-2xl">
-              <h3 className="text-lg font-semibold mb-4">Data Management</h3>
+              <h3 className="text-lg font-semibold mb-4 text-glass-primary">Data Management</h3>
               
               <div className="space-y-4">
-                <div className="p-4 bg-gray-50 rounded-lg">
-                  <p className="font-medium text-gray-900 mb-2">Export Data</p>
-                  <p className="text-sm text-gray-600 mb-3">Download all your field and task data</p>
+                <div className="p-4 bg-white/5 border border-white/10 rounded-lg">
+                  <p className="font-medium text-glass-primary mb-2">Export Data</p>
+                  <p className="text-sm text-glass-secondary mb-3">Download all your job and task data</p>
                   <div className="flex gap-3">
-                    <button className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">
+                    <button className="cherry-red-btn px-4 py-2 rounded-lg">
                       Export as CSV
                     </button>
-                    <button className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">
+                    <button className="cherry-red-btn px-4 py-2 rounded-lg">
                       Export as JSON
                     </button>
                   </div>
                 </div>
                 
-                <div className="p-4 bg-gray-50 rounded-lg">
-                  <p className="font-medium text-gray-900 mb-2">Automatic Backups</p>
-                  <p className="text-sm text-gray-600 mb-3">Last backup: Today at 3:00 AM</p>
-                  <button className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-white">
+                <div className="p-4 bg-white/5 border border-white/10 rounded-lg">
+                  <p className="font-medium text-glass-primary mb-2">Automatic Backups</p>
+                  <p className="text-sm text-glass-secondary mb-3">Last backup: Today at 3:00 AM</p>
+                  <button className="px-4 py-2 border border-white/20 rounded-lg hover:bg-white/10 text-glass-primary transition-colors">
                     Backup Now
                   </button>
                 </div>
@@ -232,8 +232,8 @@ const Settings: React.FC = () => {
               onClick={handleSave}
               className={`px-6 py-2 rounded-lg flex items-center space-x-2 transition-all ${
                 saved
-                  ? 'bg-green-600 text-white'
-                  : 'bg-indigo-600 text-white hover:bg-indigo-700'
+                  ? 'bg-green-500 text-white'
+                  : 'cherry-red-btn'
               }`}
             >
               {saved ? (

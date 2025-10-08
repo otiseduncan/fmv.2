@@ -1,1 +1,126 @@
-import React from 'react';import { Activity, TrendingUp, Users, Droplets, AlertTriangle, CheckCircle, Loader2 } from 'lucide-react';import { useAppContext } from '@/contexts/AppContext';import { useAuth } from '@/contexts/AuthContext';const Dashboard: React.FC = () => {  const { fields, tasks, teamMembers, loading, updateTeamMember } = useAppContext();  const { profile } = useAuth();  if (loading) {    return (      <div className="flex items-center justify-center h-96">        <Loader2 className="w-8 h-8 animate-spin text-green-600" />      </div>    );  }  const healthyFields = fields.filter(f => f.status === 'healthy').length;  const criticalFields = fields.filter(f => f.status === 'critical').length;  const needsAttention = fields.filter(f => f.status === 'needs_attention').length;  const activeTeam = teamMembers.filter(m => m.status === 'available').length;  const pendingTasks = tasks.filter(t => t.status === 'pending').length;  const avgMoisture = fields.length > 0 ? Math.round(fields.reduce((acc, f) => acc + f.soil_moisture, 0) / fields.length) : 0;  const totalYield = fields.reduce((acc, f) => acc + f.expected_yield, 0);  const completedTasks = tasks.filter(t => t.status === 'completed').slice(0, 5);  const assignedSet = new Set<string>(teamMembers.flatMap(m => m.assigned_fields || []));  const unassignedFields = fields.filter(f => !assignedSet.has(f.id));  const handleSelfAssign = async (fieldId: string) => {    try {      const me = teamMembers.find(m => m.email?.toLowerCase() === (profile?.email || '').toLowerCase())        || teamMembers.find(m => m.name === profile?.full_name)        || teamMembers.find(m => m.status === 'available')        || teamMembers[0];      if (!me) return;      const current = me.assigned_fields || [];      if (current.includes(fieldId)) return;      await updateTeamMember(me.id, { assigned_fields: [...current, fieldId] });    } catch (err) {      console.error('Assign failed', err);    }  };  const stats = [    { label: 'On-Schedule Jobs', value: healthyFields, icon: CheckCircle, color: 'text-green-600 bg-green-100' },    { label: 'Critical Alerts', value: criticalFields, icon: AlertTriangle, color: 'text-red-600 bg-red-100' },    { label: 'Needs Attention', value: needsAttention, icon: Activity, color: 'text-yellow-600 bg-yellow-100' },    { label: 'Active Techs', value: activeTeam, icon: Users, color: 'text-blue-600 bg-blue-100' },    { label: 'Pending Tasks', value: pendingTasks, icon: Activity, color: 'text-purple-600 bg-purple-100' },    { label: 'Avg Readiness', value: `${avgMoisture}%`, icon: Droplets, color: 'text-cyan-600 bg-cyan-100' },    { label: 'Total Est. Hours', value: `${totalYield}h`, icon: TrendingUp, color: 'text-indigo-600 bg-indigo-100' },    { label: 'Active Jobs', value: fields.length, icon: Activity, color: 'text-gray-600 bg-gray-100' }  ];  return (    <div className="space-y-6">      <div className="bg-gradient-to-r from-green-600 to-blue-600 rounded-2xl p-8 text-white">        <h1 className="text-4xl font-bold mb-2">SyferField Management</h1>        <p className="text-green-100">Driving Technology</p>      </div>      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">        {stats.map((stat, idx) => {          const Icon = stat.icon;          return (            <div key={idx} className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow p-6">              <div className="flex items-center justify-between">                <div>                  <p className="text-sm text-gray-600 mb-1">{stat.label}</p>                  <p className="text-2xl font-bold text-gray-900">{stat.value}</p>                </div>                <div className={`p-3 rounded-lg ${stat.color}`}>                  <Icon className="w-6 h-6" />                </div>              </div>            </div>          );        })}      </div>      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">        <div className="bg-white rounded-xl shadow-sm p-6">          <h3 className="text-lg font-semibold mb-4">Recently Completed Jobs</h3>          <div className="space-y-3">            {completedTasks.length === 0 && (              <div className="p-3 bg-gray-50 rounded-lg text-sm text-gray-600">No jobs completed yet.</div>            )}            {completedTasks.map(task => {              const job = fields.find(f => f.id === task.field_id);              return (                <div key={task.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">                  <div className="flex-1">                    <p className="font-medium text-gray-900">{job?.name || task.title}</p>                    <p className="text-sm text-gray-600">{task.title}</p>                  </div>                  <span className="px-2 py-1 text-xs rounded-full bg-green-100 text-green-700">Completed</span>                </div>              );            })}          </div>        </div>        <div className="bg-white rounded-xl shadow-sm p-6">          <h3 className="text-lg font-semibold mb-4">Current Job Requests</h3>          <div className="space-y-3">            {unassignedFields.slice(0, 8).map(field => (              <div key={field.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">                <div className="flex items-center space-x-3">                  <img src={field.image_url} alt={field.name} className="w-12 h-12 rounded-lg object-cover" />                  <div>                    <p className="font-medium text-gray-900">{field.name}</p>                    <p className="text-sm text-gray-600">{field.crop} • {field.size} hrs</p>                  </div>                </div>                <span onClick={() => handleSelfAssign(field.id)} className="px-3 py-1 text-xs rounded-md bg-blue-600 text-white hover:bg-blue-700">Assign to me</span>              </div>            ))}          </div>        </div>      </div>    </div>  );};export default Dashboard;
+import React from 'react';
+import { Activity, TrendingUp, Users, Droplets, AlertTriangle, CheckCircle, Loader2 } from 'lucide-react';
+import { useAppContext } from '@/contexts/AppContext';
+import { useAuth } from '@/contexts/AuthContext';
+
+const Dashboard: React.FC = () => {
+  const { fields, tasks, teamMembers, loading, updateTeamMember } = useAppContext();
+  const { profile } = useAuth();
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-96">
+        <Loader2 className="w-8 h-8 animate-spin text-green-600" />
+      </div>
+    );
+  }
+
+  const healthyFields = fields.filter(f => f.status === 'healthy').length;
+  const criticalFields = fields.filter(f => f.status === 'critical').length;
+  const needsAttention = fields.filter(f => f.status === 'needs_attention').length;
+  const activeTeam = teamMembers.filter(m => m.status === 'available').length;
+  const pendingTasks = tasks.filter(t => t.status === 'pending').length;
+  const avgMoisture = fields.length > 0 ? Math.round(fields.reduce((acc, f) => acc + f.soil_moisture, 0) / fields.length) : 0;
+  const totalYield = fields.reduce((acc, f) => acc + f.expected_yield, 0);
+  const completedTasks = tasks.filter(t => t.status === 'completed').slice(0, 5);
+  const assignedSet = new Set<string>(teamMembers.flatMap(m => m.assigned_fields || []));
+  const unassignedFields = fields.filter(f => !assignedSet.has(f.id));
+
+  const handleSelfAssign = async (fieldId: string) => {
+    try {
+      const me =
+        teamMembers.find(m => m.email?.toLowerCase() === (profile?.email || '').toLowerCase()) ||
+        teamMembers.find(m => m.name === profile?.full_name) ||
+        teamMembers.find(m => m.status === 'available') ||
+        teamMembers[0];
+      if (!me) return;
+      const current = me.assigned_fields || [];
+      if (current.includes(fieldId)) return;
+      await updateTeamMember(me.id, { assigned_fields: [...current, fieldId] });
+    } catch (err) {
+      console.error('Assign failed', err);
+    }
+  };
+
+  const stats = [
+    { label: 'On-Schedule Jobs', value: healthyFields, icon: CheckCircle, color: 'text-green-600 bg-green-100' },
+    { label: 'Critical Alerts', value: criticalFields, icon: AlertTriangle, color: 'text-red-600 bg-red-100' },
+    { label: 'Needs Attention', value: needsAttention, icon: Activity, color: 'text-yellow-600 bg-yellow-100' },
+    { label: 'Active Techs', value: activeTeam, icon: Users, color: 'text-red-600 bg-red-100' },
+    { label: 'Pending Tasks', value: pendingTasks, icon: Activity, color: 'text-purple-600 bg-purple-100' },
+    { label: 'Avg Readiness', value: `${avgMoisture}%`, icon: Droplets, color: 'text-cyan-600 bg-cyan-100' },
+    { label: 'Total Est. Hours', value: `${totalYield}h`, icon: TrendingUp, color: 'text-red-600 bg-red-100' },
+    { label: 'Active Jobs', value: fields.length, icon: Activity, color: 'text-gray-600 bg-gray-100' },
+  ];
+
+  return (
+    <div className="space-y-6">
+      <div className="glass-card rounded-2xl p-8 text-glass-primary">
+        <h1 className="text-4xl font-bold mb-2">DriveOps-IQ</h1>
+        <p className="text-primary">Intelligent Operations for the Modern Field.</p>
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {stats.map((stat, idx) => {
+          const Icon = stat.icon;
+          return (
+            <div key={idx} className="glass-card rounded-xl hover:shadow-lg transition-all p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-glass-secondary mb-1">{stat.label}</p>
+                  <p className="text-2xl font-bold text-glass-primary">{stat.value}</p>
+                </div>
+                <div className="p-3 rounded-lg bg-primary/20 border border-primary/30">
+                  <Icon className="w-6 h-6 text-primary" />
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div className="glass-card rounded-xl p-6">
+          <h3 className="text-lg font-semibold mb-4 text-glass-primary">Recent Activity</h3>
+          <div className="space-y-3">
+            {completedTasks.length === 0 && (
+              <div className="p-3 bg-white/5 border border-white/10 rounded-lg text-sm text-glass-secondary">No jobs completed yet.</div>
+            )}
+            {completedTasks.map(task => {
+              const job = fields.find(f => f.id === task.field_id);
+              return (
+                <div key={task.id} className="flex items-center justify-between p-3 bg-white/5 border border-white/10 rounded-lg hover:bg-white/10 transition-colors">
+                  <div className="flex-1">
+                    <p className="font-medium text-glass-primary">{job?.name || task.title}</p>
+                    <p className="text-sm text-glass-secondary">{task.title}</p>
+                  </div>
+                  <span className="px-2 py-1 text-xs rounded-full bg-green-500/20 text-green-400 border border-green-500/30">Completed</span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="glass-card rounded-xl p-6">
+          <h3 className="text-lg font-semibold mb-4 text-glass-primary">Current Job Requests</h3>
+          <div className="space-y-3">
+            {unassignedFields.slice(0, 8).map(field => (
+              <div key={field.id} className="flex items-center justify-between p-3 bg-white/5 border border-white/10 rounded-lg hover:bg-white/10 transition-colors">
+                <div className="flex items-center space-x-3">
+                  <img src={field.image_url} alt={field.name} className="w-12 h-12 rounded-lg object-cover" />
+                  <div>
+                    <p className="font-medium text-glass-primary">{field.name}</p>
+                    <p className="text-sm text-glass-secondary">{field.crop} • {field.size} hrs</p>
+                  </div>
+                </div>
+                <button onClick={() => handleSelfAssign(field.id)} className="cherry-red-btn px-3 py-1 text-xs rounded-md">Assign to me</button>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Dashboard;

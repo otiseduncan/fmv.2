@@ -8,7 +8,7 @@ export const SyncIndicator = () => {
     <div className="fixed top-4 right-4 z-50 flex flex-col gap-2">
       {/* Syncing indicator */}
       {syncing && (
-        <div className="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg animate-in slide-in-from-top">
+        <div className="flex items-center gap-2 bg-red-500 text-white px-4 py-2 rounded-lg shadow-lg animate-in slide-in-from-top">
           <RefreshCw className="h-4 w-4 animate-spin" />
           <span className="text-sm font-medium">Syncing...</span>
         </div>

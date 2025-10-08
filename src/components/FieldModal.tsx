@@ -13,7 +13,7 @@ interface FieldModalProps {
 }
 
 const FieldModal: React.FC<FieldModalProps> = ({ field, onClose }) => {
-  const { createField, updateField, deleteField, teamMembers } = useAppContext();
+  const { addField, updateField, deleteField, teamMembers } = useAppContext();
   const { canEditField, canDeleteField } = useAuth();
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
@@ -56,11 +56,11 @@ const FieldModal: React.FC<FieldModalProps> = ({ field, onClose }) => {
 
         toast({ title: 'Job updated successfully' });
       } else {
-        const newField = await createField(formData);
+        await addField(formData);
         await logAudit({
           actionType: 'CREATE',
           tableName: 'fields',
-          recordId: newField?.id,
+          recordId: undefined,
           newData: formData,
           description: `Created job: ${formData.name}`
         });

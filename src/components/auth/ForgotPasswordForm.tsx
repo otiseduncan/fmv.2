@@ -32,34 +32,35 @@ export const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({ onBack }
   };
 
   return (
-    <Card className="w-full max-w-md">
-      <CardHeader>
-        <CardTitle>Reset Password</CardTitle>
-        <CardDescription>Enter your email to receive a reset link</CardDescription>
-      </CardHeader>
-      <CardContent>
+    <div className="glass-card rounded-xl p-6 w-full max-w-md">
+      <div className="mb-6">
+        <h2 className="text-2xl font-bold text-glass-primary mb-2">Reset Password</h2>
+        <p className="text-glass-secondary">Enter your email to receive a reset link</p>
+      </div>
+      <div>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email" className="text-glass-primary">Email</Label>
             <Input
               id="email"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              className="bg-white/10 border-white/20 text-glass-primary placeholder:text-glass-secondary/60"
             />
           </div>
-          <Button type="submit" className="w-full" disabled={loading}>
+          <Button type="submit" className="w-full cherry-red-btn" disabled={loading}>
             {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             Send Reset Link
           </Button>
           <div className="text-center text-sm">
-            <button type="button" onClick={onBack} className="text-blue-600 hover:underline">
+            <button type="button" onClick={onBack} className="text-primary hover:text-primary/80 transition-colors">
               Back to login
             </button>
           </div>
         </form>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
